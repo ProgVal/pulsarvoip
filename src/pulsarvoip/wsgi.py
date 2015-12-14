@@ -1,5 +1,5 @@
 """
-WSGI config for pulsarvoip project.
+WSGI config for pulsar project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -8,9 +8,10 @@ https://docs.djangoproject.com/en/1.8/howto/deployment/wsgi/
 """
 
 import os
-
+import sys
 from django.core.wsgi import get_wsgi_application
-
+sys.path.append('/var/www/pulsarvoip/src')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pulsarvoip.settings")
 
 application = get_wsgi_application()
+
