@@ -9,7 +9,7 @@
 .swMain {
   position:relative;
   display:block;
-  margin:0;
+  margin: 60px;
   padding:0;
   /*border: 0 solid #CCC;*/
   overflow:visible;
@@ -109,7 +109,7 @@
   margin: 5px 0 0 0;
   padding:3px;
   height:60px;
-  width:230px;
+  width:237px;
   text-decoration: none;
   outline-style:none;
   -moz-border-radius  : 5px;
@@ -181,7 +181,9 @@
 .swMain ul.anchor li a.error:hover {
   color:#000 !important;       
 }
-
+.swMain .stepContainer div.content {
+  padding: 0px;
+}
 .swMain .buttonNext {
   display:block;
   float:right;

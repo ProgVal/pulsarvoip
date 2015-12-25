@@ -11,41 +11,21 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Starter Template for Bootstrap</title>
+    <title>PulsarVOIP</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../static/static/css/bootstrap.min.css"  rel="stylesheet">
+    <link href="{% static 'static/css/bootstrap.min.css' %}"  rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../static/static/css/sticky-footer-navbar.css" rel="stylesheet">
-     <link href="../static/static/css/starter-template.css" rel="stylesheet">
-     <link href="../static/static/css/smart_wizard.css" rel="stylesheet" >
-     <link href="../static/static/css/demo_style.css" rel="stylesheet" >
-
-     <link href="../static/static/css/wizard.css" rel="stylesheet">
-     
-
-    <!-- Bootstrap core CSS -->
-    <!-- <link href="../../dist/css/bootstrap.min.css" rel="stylesheet"> -->
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <!-- <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
-
-    <!-- Custom styles for this template -->
-    <!-- <link href="starter-template.css" rel="stylesheet"> -->
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
-
-    <!-- jQuery Smart Wizard  http://mstratman.github.com/jQuery-Smart-Wizard/ -->
+    <link href="{% static 'static/css/sticky-footer-navbar.css' %}" rel="stylesheet">
+    <link href="{% static 'static/css/starter-template.css' %}" rel="stylesheet">
+    <link href="{% static 'static/css/smart_wizard.css' %}" rel="stylesheet" >
+    <link href="{% static 'static/css/demo_style.css' %}" rel="stylesheet" >
+    <link href="{% static 'static/css/progressbutton.css' %}" rel="stylesheet" >
          
   </head>
 
   <body>
-
- 
-
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -63,17 +43,31 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
+             <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+              {% if not request.user.is_authenticated %}
+                <li><a href="{% url 'account_login' %}">Login</a></li>
+                <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+               {% else %}
+                <li><a href="{% url 'account_logout' %}">Logout</a></li>
+                {% endif %}
+              </ul>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
-    </nav><br><br><br><br><br>
- {% block main_content %}
+    </nav>
+  {% block head_title %}
+  {% endblock %}
+
+ 
+{% block content %}
    
-{% endblock main_content %}
+{% endblock %}
    
-    {% block step1 %}
+{% block step1 %}
  {% endblock %}
-  {% block step2 %}
+{% block step2 %}
  {% endblock %}
 
      <footer class="footer">
@@ -88,9 +82,10 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <!-- // <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
-   <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-   <script src="../static/static/js/jquery.min.js"></script>
-    <script src="../static/static/js/wizard.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="../static/static/js/jquery.min.js"></script>
+    
+    <script src="../static/static/js/button_click.js"></script>
         
     <script src="../static/static/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

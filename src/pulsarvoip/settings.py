@@ -29,6 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+AUTH_USER_MODEL = 'auth.User'
 # Application definition
 
 INSTALLED_APPS = (
@@ -38,15 +39,55 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bootstrap3',
-    'treemenus',
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
+    #'bootstrap3',
+    #'treemenus',
+    'crispy_forms',
+    'bootstrapform',
     'pulsarvpn',
+
+
 )
+SITE_ID = 1
+LOGIN_URL ='/accounts/login/'
+LOGIN_REDIRECT_URL = '/step1'
+
+ACCOUNT_AUTHENTICATION_METHOD = "username_email" #(="username" | "email" | "username_email")
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True # (=False)
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL =  LOGIN_URL
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = LOGIN_REDIRECT_URL
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 10
+ACCOUNT_EMAIL_REQUIRED = True 
+ACCOUNT_EMAIL_VERIFICATION = None #choices are: "mandatory", "optional", or None
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "Subject is: "
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "http" #if secure use https
+ACCOUNT_LOGOUT_ON_GET = False #log user out right away.
+ACCOUNT_LOGOUT_REDIRECT_URL = LOGIN_URL
+ACCOUNT_SIGNUP_FORM_CLASS =None # add a custom sign up form
+ACCOUNT_SIGNUP_PASSWORD_VERIFICATION =True # use False if you don't want double password fields
+ACCOUNT_UNIQUE_EMAIL= True #enforces emails are unique to all accounts
+ACCOUNT_USER_MODEL_USERNAME_FIELD = "username" # If you're using a Custom Model, maybe it's "email"
+ACCOUNT_USER_MODEL_EMAIL_FIELD ="email" 
+#ACCOUNT_USER_DISPLAY (=a callable returning user.username)
+ACCOUNT_USERNAME_MIN_LENGTH = 4
+ACCOUNT_USERNAME_BLACKLIST =['some_username_youdon\'t_want']
+ACCOUNT_USERNAME_REQUIRED =True #do you want them to have a user name?
+ACCOUNT_PASSWORD_INPUT_RENDER_VALUE =False #don't show the password
+ACCOUNT_PASSWORD_MIN_LENGTH =6 #min length of password
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION =True #login the user after confirming email, if required.
+
+
+# CRISPY_TEMPLATE_PACK = 'uni_form'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -64,28 +105,61 @@ TEMPLATES = [
         'OPTIONS': {
 
             'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.core.context_processors.i18n',
+                'django.core.context_processors.static',
+                'django.core.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
+                # 'django.core.context_processors.csrf',
+                 # `allauth` needs this from django
+                'django.template.context_processors.request',
+
+                
             ],
 
         },
     },
 ]
 
-WSGI_APPLICATION = 'pulsarvoip.wsgi.application'
+AUTHENTICATION_BACKENDS = (
+    
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
 
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+    
+)
+ROOT_URLCONF = 'pulsarvoip.urls'
+WSGI_APPLICATION = 'pulsarvoip.wsgi.application'
+CSRF_FAILURE_VIEW = True
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#    }
+#}
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'read_default_file': '/etc/mysql/my.cnf',
+        },
     }
 }
+
+
+DATABASE_ENGINE = 'mysql'
+DATABASE_NAME = 'pulsarvoip_db'
+DATABASE_USER = 'avkpol'
+DATABASE_PASSWORD = '1963'
+DATABASE_HOST = '84.22.98.170'
+DATABASE_PORT = '' 
 
 
 # Internationalization
@@ -104,9 +178,24 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"), )
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, "static", "static"), )
+#if DEBUG:
+#    STATICFILES_DIRS = ('/var/www/pulsarvoip/src/static/static-admin/',)
+#    #STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"), )
+#    STATIC_URL = '/static/'
+#    STATIC_ROOT = '/var/www/pulsarvoip/src/static/static-admin'
+#    #STATIC_ROOT = os.path.join(BASE_DIR, "static", "static-admin")
+#    MEDIA_URL = '/media/'
+#    MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
+TEMPLATE_DIRS =  (os.path.join(BASE_DIR,"templates"),)
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR,"static"), )
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static", "static-admin")
+STATIC_ROOT = os.path.join(BASE_DIR, "static", "admin")
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
+
+
+
+
+
+

@@ -1,12 +1,30 @@
 {% extends 'base.html' %}
 
-
 {% csrf_token %}
 
 
-  {% block step1 %}
-<!-- <div id ="jmessage" role="alert" class='col-sm-6 col-sm-offset-3'></div> -->
+{% block message %}
+    <br><br><br><br>
+    <div class="container">
+    {% if messages %}
+    <div class='row'>
+    <div class= 'col-sm-6 col-sm-offset-3' >
+          {% for message in messages %}
+      <p>{% if message.tags == "success" %} class="alert alert-success" 
+             {% endif %}>{{ message }}</p>
+      
+        
+           {% endfor %} 
+        {% endif %} 
+ 
+</div>
+</div>
+</div>
+ {% endblock %}
 
+  {% block step1 %}
+
+  {{ message }}
 <table align="center" border="0" cellpadding="0" cellspacing="0">
 <tbody>
  <tr>
@@ -50,31 +68,43 @@
             
             
       <div style="height: 312px;" class="stepContainer"><div style="display: none;" class="content" id="step-1">  
-                <h2 class="StepTitle">Step 1 Generate and Test Key </h2>
+                <h2 class="StepTitle">Step 1 Content</h2>
                 <ul type="disk">
-                  
+                  <li>List 1</li>
+                  <li>List 2</li>
                 </ul>
-                <p><h3>Welcome to Openvpn configuration page !</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                 Ut enim ad minim veniam, 
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea 
+                commodo consequat. 
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum 
+                dolore eu fugiat nulla pariatur. 
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
+                officia deserunt mollit anim id est laborum.
                 </p>
                 <p>
-               This wizard will help you to set up and configurate openvpn
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </p>
                 <p>
-                To generate key please press "Generate key" button  
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </p>                
-                <div><br><br><br>
-
-                <!-- <div id="jmessage" role="alert"></div> -->
-              <div class="row"> 
-                <a id="submitButton" href="#" class="col-sm-3 progress-button">Generate and test</a>
-                <div id ="jmessage" role="alert" class='col-sm-7 '></div>
-              </div>
-
+                <div>
                   
-                 <!--  <input type="submit" class="btn btn-info active col-md-3 col-md-pull" id="gen_keys"  
-                   action=""   value="Generate key"> -->
-                 
-                
+                  <input type="submit" class="btn btn-info pull-right 10" id="gen_keys"  
+                   action="/step1/"  value="Generate"><!-- {% csrf_token %} -->
+                  
+
+
+
                 </div>
             </div><div style="display: block;" class="content" id="step-2">
                 <h2 class="StepTitle">Step 2 Content</h2> 
@@ -107,18 +137,18 @@
                 </p>          
             </div><div style="display: none;" class="content" id="step-3">
                 <h2 class="StepTitle">Step 3 Content</h2> 
-                
-
-                <form method="POST" >
-                {% csrf_token %}
-                <input type="text" name="textfield">
-
-                <button type="submit" id = "vars-data-promt">Upload text</button>
-                </form>
-
-                
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
                 <p>
-                
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </p>                                
             </div><div style="display: none;" class="content" id="step-4">
                 <h2 class="StepTitle">Step 4 Content</h2> 

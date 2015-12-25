@@ -13,8 +13,45 @@
 
   $(document).ready(function() {
       // Initialize Smart Wizard
-        $('#wizard').smartWizard();
-  }); 
+        $('#wizard').smartWizard({
+            onLeaveStep: leaveAStepCallback,
+            onFinish: onFinishCallback,
+            onShowStep: onShowStep
+        });
+        
+        function onShowStep(obj, context) {
+            $(".buttonPrevious").unbind("click").click(function (e) {
+                e.preventDefault();
+                $("#wizard").smartWizard("goBackward");
+            });
+
+            $(".buttonNext").unbind("click").click(function (e) {
+                e.preventDefault();
+                $("#wizard").smartWizard("goForward");
+            });
+        }
+
+        function leaveAStepCallback(obj, context) {
+
+            $(".buttonPrevious").unbind("click");
+            $(".buttonNext").unbind("click");
+
+            return true;
+        }
+
+        function onFinishCallback(objs, context) {
+
+        }
+
+         function showWizardMessage(){
+            var myMessage = 'Hello this is my message';
+            // You can call this line wherever to show message inside the wizard
+            // $('#wizard').smartWizard('showMessage',myMessage);
+        }
+    
+    });
+
+
 
 function SmartWizard(target, options) {
     this.target       = target;
@@ -26,9 +63,9 @@ function SmartWizard(target, options) {
     this.elmStepContainer = $('<div></div>').addClass("stepContainer");
     this.loader = $('<div>Loading</div>').addClass("loader");
     this.buttons = {
-        run : $('<a>'+options.labelRun+'</a>').attr("href","#").addClass("buttonRun"),
+        // run : $('<a>'+options.labelRun+'</a>').attr("href","#").addClass("buttonRun"),
         next : $('<a>'+options.labelNext+'</a>').attr("href","#").addClass("buttonNext"),
-        previous : $('<a>'+options.labelPrevious+'</a>').attr("href","#").addClass("buttonPrevious"),
+        // previous : $('<a>'+options.labelPrevious+'</a>').attr("href","#").addClass("buttonPrevious"),
         finish  : $('<a>'+options.labelFinish+'</a>').attr("href","#").addClass("buttonFinish")
     };
 
@@ -43,6 +80,7 @@ function SmartWizard(target, options) {
         $('.close',$this.msgBox).click(function() {
             $this.msgBox.fadeOut("normal");
             return false;
+         // $('#wizard').smartWizard('showMessage',"myMessage");   
         });
 
         var allDivs = $this.target.children('div');
@@ -95,6 +133,7 @@ function SmartWizard(target, options) {
         $($this.buttons.next).click(function() {
             $this.goForward();
             // alert("key was sucessfully generated") 
+             // $('#jmessage')removeClass("alert alert-success")
             return false;
         });
 
@@ -266,6 +305,7 @@ function SmartWizard(target, options) {
             _setupStep($this,curStep,selStep);
         }
         return true;
+
     };
 
     var _setupStep = function($this, curStep, selStep) {
@@ -292,7 +332,8 @@ function SmartWizard(target, options) {
                 $this.disableStep(i);
             }
         }
-    };
+    };   
+
 
     var _adjustButton = function($this) {
         if (! $this.options.cycleSteps){
@@ -322,7 +363,7 @@ function SmartWizard(target, options) {
         // Finish Button
         $this.enableFinish($this.options.enableFinishButton);
 
-        $this.enableFinish($this.options.enableFinishButton);
+        // $this.enableFinish($this.options.enableFinishButton);
 
     };
 
@@ -480,24 +521,25 @@ function SmartWizard(target, options) {
 // Default Properties and Events
     $.fn.smartWizard.defaults = {
         selected: 0,  // Selected Step, 0 = first step
-        keyNavigation: true, // Enable/Disable key navigation(left and right keys are used if enabled)
+        keyNavigation: false, // Enable/Disable key navigation(left and right keys are used if enabled)
         enableAllSteps: false,
         transitionEffect: 'fade', // Effect on navigation, none/fade/slide/slideleft
         contentURL:null, // content url, Enables Ajax content loading
         contentCache:true, // cache step contents, if false content is fetched always from ajax url
         cycleSteps: false, // cycle step navigation
-        enableFinishButton: true, // make finish button enabled always
+        enableFinishButton: false, // make finish button enabled always
         hideButtonsOnDisabled: true, // when the previous/next/finish buttons are disabled, hide them instead?
         errorSteps:[],    // Array Steps with errors
         labelRun:'Run',
         labelNext:'Next',
         labelPrevious:'Previous',
         labelFinish:'Finish',
-        noForwardJumping: false,
+        noForwardJumping: true,
+        
         ajaxType: "POST",
-        onLeaveStep: null, // triggers when leaving a step
-        onShowStep: null,  // triggers when showing a step
-        onFinish: null,  // triggers when Finish button is clicked
+        onLeaveStep: true, // triggers when leaving a step
+        onShowStep: true,  // triggers when showing a step
+        onFinish: true,  // triggers when Finish button is clicked
         includeFinishButton : true   // Add the finish button
     };
 
